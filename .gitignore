@@ -1,10 +1,15 @@
 # Ignore Python cache files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
 
-# Ignore environment folders
-botenv/
-shapenv/
+
+# Ignore virtual environments
+*.env
+api/env/
+chatbot/env/
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -15,3 +20,16 @@ shapenv/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Data and models
+chatbot/models/*
+
+# Misc
+*.log
+
+# Ignore Rasa cache
+.rasa/cache/
