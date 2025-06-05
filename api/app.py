@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, send_from_directory, request, jsonify
+import requests
 import pandas as pd
 import joblib
 import shap
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_folder='static')
 
 # Load the complete pipeline 
 model_path = '..\models\\best-car-model'
@@ -81,6 +83,20 @@ def max_contribution():
 
     feature, percentage = get_max_contribution(params)
     return jsonify({'highest_contributing_feature': feature, 'percentage_contribution': percentage})
+
+# Route to forward messages to Rasa
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get('message')
+    rasa_url = 'http://localhost:5005/webhooks/rest/webhook'
+    payload = {'sender': 'user', 'message': user_message}
+    response = requests.post(rasa_url, json=payload)
+    return jsonify(response.json())
+
+# Serve the chat interface
+@app.route('/')
+def index():
+    return send_from_directory('static', 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
