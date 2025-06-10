@@ -3,9 +3,11 @@ import requests
 import pandas as pd
 import joblib
 import shap
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_folder='static')
+CORS(app, resources={r"/chat": {"origins": "http://localhost:8000"}})
 
 # Load the complete pipeline 
 model_path = '..\models\\best-car-model'
@@ -84,20 +86,28 @@ def max_contribution():
     feature, percentage = get_max_contribution(params)
     return jsonify({'highest_contributing_feature': feature, 'percentage_contribution': percentage})
 
-# Route to forward messages to Rasa
+# Rasa server endpoint
+RASA_API_URL = 'http://localhost:5005/webhooks/rest/webhook'
+
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message')
-    rasa_url = 'http://localhost:5005/webhooks/rest/webhook'
-    payload = {'sender': 'user', 'message': user_message}
-    response = requests.post(rasa_url, json=payload)
-    return jsonify(response.json())
+    if not user_message:
+        return jsonify({'error': 'No message provided'}), 400
 
-# Serve the chat interface
-@app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
+    # Prepare payload for Rasa
+    payload = {
+        'sender': 'user',
+        'message': user_message
+    }
+
+    try:
+        # Send message to Rasa
+        response = requests.post(RASA_API_URL, json=payload)
+        response.raise_for_status()
+        return jsonify(response.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(port=5000, debug=True)

@@ -30,6 +30,7 @@ chatbot/models/*
 
 # Misc
 *.log
+*.bat
 
 # Ignore Rasa cache
 .rasa/cache/
