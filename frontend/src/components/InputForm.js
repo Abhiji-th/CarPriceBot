@@ -6,7 +6,7 @@ function InputForm({ onSendMessage }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      onSendMessage(input); // Send input to parent
+      onSendMessage(input.trim()); // Send input to parent
       setInput(''); // Clear input
     }
   };
@@ -14,36 +14,18 @@ function InputForm({ onSendMessage }) {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        display: 'flex',
-        padding: '10px',
-        backgroundColor: '#fff',
-        borderTop: '1px solid #ccc',
-      }}
+      className="flex p-2 bg-white shadow-md rounded-full border border-gray-300"
     >
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type a message..."
-        style={{
-          flex: 1,
-          padding: '8px',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          marginRight: '8px',
-        }}
+        className="flex-1 px-3 py-2 rounded-full mr-2 outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
         type="submit"
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
+        className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
       >
         Send
       </button>

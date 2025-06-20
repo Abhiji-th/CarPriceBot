@@ -13,7 +13,6 @@ function App() {
 
   return (
     <div>
-      <h1>Car Price Chatbot</h1>
       <ChatBot />
     </div>
   );

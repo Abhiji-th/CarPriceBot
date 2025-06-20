@@ -1,48 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 function ChatWindow({ messages }) {
-  const messagesEndRef = useRef(null);
+  const endOfMessagesRef = useRef(null);
 
   // Scroll to bottom when messages change
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
-    <div
-      style={{
-        border: '1px solid #ccc',
-        padding: '10px',
-        height: '300px',
-        overflowY: 'scroll',
-        backgroundColor: '#f9f9f9',
-      }}
-    >
-      {messages.map((msg, index) => (
-        <div
-          key={index}
-          style={{
-            display: 'flex',
-            justifyContent: msg.isBot ? 'flex-start' : 'flex-end',
-            marginBottom: '10px',
-          }}
-        >
+    <div className="rounded-xl bg-white shadow-lg h-full flex flex-col">
+      {/* Header */}
+      <div className="bg-blue-600 text-white p-4 rounded-t-xl">
+        <h2 className="text-lg font-semibold">Chatbot</h2>
+      </div>
+
+      {/* Messages Area */}
+      <div className="flex-grow flex flex-col p-4 space-y-3 overflow-y-auto text-gray-900">
+        {messages.map((msg, index) => (
           <div
-            style={{
-              maxWidth: '70%',
-              padding: '8px 12px',
-              borderRadius: '10px',
-              backgroundColor: msg.isBot ? '#e0e0e0' : '#007bff',
-              color: msg.isBot ? '#000' : '#fff',
-              wordBreak: 'break-word',
-            }}
+            key={index}
+            className={`max-w-xs px-4 py-2 rounded-lg ${
+              msg.isBot
+                ? "bg-gray-200 self-start"
+                : "bg-blue-100 self-end"
+            }`}
           >
-            <p style={{ margin: 0 }}>{msg.text}</p>
+            {msg.text}
           </div>
-        </div>
-      ))}
-      <div ref={messagesEndRef} />
+        ))}
+        {/* Invisible marker to scroll into view */}
+        <div ref={endOfMessagesRef} />
+      </div>
     </div>
+
   );
 }
 
