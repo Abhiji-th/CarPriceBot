@@ -69,7 +69,6 @@ Trained model is serialized as `car_price_model.pkl`.
 
 ## 🔗 Project Structure
 
-\`\`\`
 car-price-chatbot/
 │
 ├── frontend/ # 💻 React app for the user interface
@@ -91,7 +90,6 @@ car-price-chatbot/
 │
 ├── requirements.txt # 📦 Python dependencies
 └── README.md # 📘 Project documentation
-\`\`\`
 
 ---
 
