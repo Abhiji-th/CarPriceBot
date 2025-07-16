@@ -45,8 +45,6 @@ Estimating the resale value of a car depends on various factors such as brand, m
   - R² Score
   - MAE/MSE
 
-Trained model is serialized as `car_price_model.pkl`.
-
 ---
 
 ## 🤖 Chatbot Features
@@ -69,7 +67,6 @@ Trained model is serialized as `car_price_model.pkl`.
 
 ## 🔗 Project Structure
 
-\`\`\`
 car-price-chatbot/
 │
 ├── frontend/ # 💻 React app for the user interface
@@ -91,7 +88,6 @@ car-price-chatbot/
 │
 ├── requirements.txt # 📦 Python dependencies
 └── README.md # 📘 Project documentation
-\`\`\`
 
 ---
 
