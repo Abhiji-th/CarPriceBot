@@ -9,14 +9,7 @@ function ChatWindow({ messages }) {
   }, [messages]);
 
   return (
-    <div className="rounded-xl bg-white shadow-lg h-full flex flex-col">
-      {/* Header */}
-      <div className="bg-blue-600 text-white p-4 rounded-t-xl">
-        <h2 className="text-lg font-semibold">Chatbot</h2>
-      </div>
-
-      {/* Messages Area */}
-      <div className="flex-grow flex flex-col p-4 space-y-3 overflow-y-auto text-gray-900">
+      <div className="flex flex-col p-4 space-y-3 overflow-y-auto text-gray-900 pb-24">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -32,8 +25,6 @@ function ChatWindow({ messages }) {
         {/* Invisible marker to scroll into view */}
         <div ref={endOfMessagesRef} />
       </div>
-    </div>
-
   );
 }
 

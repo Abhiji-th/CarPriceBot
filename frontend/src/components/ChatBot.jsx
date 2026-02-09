@@ -36,16 +36,10 @@ function Chatbot() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-2xl h-[80vh] flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden mx-4">
-        <div className="flex-grow overflow-auto p-4">
-          <ChatWindow messages={messages} />
-        </div>
-        <div className="p-4 bg-gray-50 border-t">
-          <InputForm onSendMessage={handleSendMessage} />
-        </div>
-      </div>
-    </div>
+    <>
+      <ChatWindow messages={messages} />
+      <InputForm onSendMessage={handleSendMessage} />
+    </>
   );
 }
 

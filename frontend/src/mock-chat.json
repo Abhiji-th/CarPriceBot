@@ -1,0 +1,7 @@
+{
+  "responses": [
+    { "id": 1, "user": "hi", "bot": "Hello! How can I help you today?" },
+    { "id": 2, "user": "bye", "bot": "Goodbye! Have a great day!" },
+    { "id": 3, "user": "default", "bot": "I'm not sure what you mean." }
+  ]
+}
