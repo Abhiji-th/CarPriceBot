@@ -40,7 +40,7 @@ Estimating the resale value of a car depends on various factors such as brand, m
   - Kilometers Driven
   - Ownership
 - **Target**: Selling Price
-- **Dataset**: [CarDekho/Custom Scraped Dataset]
+- **Dataset**: [CarDekho Used Car Dataset]
 - **Evaluation Metrics**:
   - R² Score
   - MAE/MSE
