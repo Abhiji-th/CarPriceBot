@@ -5,6 +5,7 @@ __pycache__/
 # Ignore environment folders
 botenv/
 shapenv/
+venv/
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -15,3 +16,6 @@ shapenv/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Ignore previous models
+models/old
