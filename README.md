@@ -24,7 +24,7 @@ Estimating the resale value of a car depends on various factors such as brand, m
 | Frontend     | React              |
 | Chatbot      | Rasa (rule-based)  |
 | ML Model     | RandomForestRegressor (scikit-learn) |
-| Backend API  | Python (Flask or FastAPI) |
+| Backend API  | Python (Flask) |
 
 ---
 
