@@ -2,10 +2,20 @@
 __pycache__/
 *.pyc
 
-# Ignore environment folders
+#Ignore Node modules
+**/node_modules
+
+# Ignore environment folders and files
+**/.env
+**/.env.*
+env.bat
+
 botenv/
 shapenv/
 venv/
+**/env/
+**/venv/
+**/.venv/
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
