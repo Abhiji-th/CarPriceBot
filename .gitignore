@@ -6,6 +6,7 @@ __pycache__/
 botenv/
 shapenv/
 venv/
+.env
 
 #Ignore node modules
 **/node_modules/
