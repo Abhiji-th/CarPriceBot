@@ -7,6 +7,9 @@ botenv/
 shapenv/
 venv/
 
+#Ignore node modules
+**/node_modules/
+
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
