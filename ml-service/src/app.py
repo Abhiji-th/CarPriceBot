@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import model_loader
 import predictor
 from shap_explainer import create_explainer 
 from utils import shap_utils
 
 app = Flask(__name__)
+CORS(app)
 
 model = model_loader.load_model()
 preprocessor = model.named_steps["preprocessor"]
