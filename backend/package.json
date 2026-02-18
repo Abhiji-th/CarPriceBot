@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node server",
-    "dev": "concurrently \"nodemon --env-file=.env server\" \"python3 ../ml-service/src/app.py\""
+    "dev": "concurrently \"nodemon --env-file=.env server\" \"python ../ml-service/src/app.py\""
   },
   "keywords": [],
   "author": "",
