@@ -5,11 +5,15 @@ __pycache__/
 *.pyd
 .Python
 
+#Ignore old models
+models/old
+
 
 # Ignore virtual environments
 *.env
 api/env/
 chatbot/env/
+**/venv
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
