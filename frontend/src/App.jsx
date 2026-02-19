@@ -1,21 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { predictPrice, maxContribution } from "./api/carApi";
+import InputForm from "./components/inputForm";
 const App = () => {
 
-  const carData = {
-  "brand": "Hyundai",
-  "model": "i20",
-  "year_of_manufacture": 2018,
-  "km_driven": 45000,
-  "fuel_type": "Petrol",
-  "transmission_type": "Manual",
-  "mileage": 18.5,
-  "engine": 1197,
-  "max_power": 82,
-  "seats": 5 
-}
+  const[carData, setcarData] = useState(null);
 
   useEffect(() => {
+    if(!carData) return;
     const getPredict = async () => {
         try{
           const response = await predictPrice(carData);
@@ -36,10 +27,12 @@ const App = () => {
 
     getPredict();
     getMaxContribution();
-  }, []);
+  }, [carData]);
 
   return (
-    <div>App</div>
+    <>
+      <InputForm sendMessage={setcarData}/>
+    </>
   )
 }
 

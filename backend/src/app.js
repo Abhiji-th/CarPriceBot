@@ -9,4 +9,4 @@ app.use(express.json());
 app.use(logger);
 app.use("/api", router);
 
-export default app; 
+export default app;
