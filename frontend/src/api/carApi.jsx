@@ -4,10 +4,7 @@ const API = axios.create({
 baseURL: "http://localhost:8080/api"
 });
 
-export const predictPrice = (data) =>{
-    return API.post("/predict_price", data);
-}
+export const getPrice = (data) => API.post("/predict_price", data);
 
-export const maxContribution = (data) =>{
-    return API.post("/max_contribution", data);
-}  
+export const getContribution = (data) => API.post("/max_contribution", data);
+
