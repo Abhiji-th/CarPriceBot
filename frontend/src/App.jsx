@@ -1,39 +1,38 @@
 import { useEffect, useState } from "react";
 import { predictPrice, maxContribution } from "./api/carApi";
-import InputForm from "./components/inputForm";
+import Home from "./pages/Home";
 const App = () => {
+	const [carData, setcarData] = useState(null);
 
-  const[carData, setcarData] = useState(null);
+	useEffect(() => {
+		if (!carData) return;
+		const getPredict = async () => {
+			try {
+				const response = await predictPrice(carData);
+				console.log(response.data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
 
-  useEffect(() => {
-    if(!carData) return;
-    const getPredict = async () => {
-        try{
-          const response = await predictPrice(carData);
-          console.log(response.data);
-        } catch(error){
-          console.error(error);
-        }
-    }
+		const getMaxContribution = async () => {
+			try {
+				const response = await maxContribution(carData);
+				console.log(response.data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
 
-    const getMaxContribution = async () => {
-        try{
-          const response = await maxContribution(carData);
-          console.log(response.data);
-        } catch(error){
-          console.error(error);
-        }
-    }
+		getPredict();
+		getMaxContribution();
+	}, [carData]);
 
-    getPredict();
-    getMaxContribution();
-  }, [carData]);
+	return (
+		<>
+			<Home />
+		</>
+	);
+};
 
-  return (
-    <>
-      <InputForm sendMessage={setcarData}/>
-    </>
-  )
-}
-
-export default App
+export default App;
