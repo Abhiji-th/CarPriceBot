@@ -11,7 +11,26 @@ const Home = () => {
 	const [prediction, setPrediction] = useState(null);
 	const [shap, setShap] = useState(null);
 
+	const formattedData = {
+		...carData,
+		year_of_manufacture: Number(carData.year_of_manufacture),
+		km_driven: Number(carData.km_driven),
+		mileage: Number(carData.mileage),
+		engine: Number(carData.engine),
+		max_power: Number(carData.max_power),
+		seats: Number(carData.seats),
+	};
+
 	const handlePredict = async () => {
+		if (
+			Object.values(carData).some(
+				(value) => value === "" || value === null || value === undefined,
+			)
+		) {
+			alert("Please Enter All Fields!");
+			return;
+		}
+
 		try {
 			setLoading(true);
 			const res = await getPrice(carData);
@@ -26,6 +45,15 @@ const Home = () => {
 	};
 
 	const handleShap = async () => {
+		if (
+			Object.values(carData).some(
+				(value) => value === "" || value === null || value === undefined,
+			)
+		) {
+			alert("Please Enter All Fields!");
+			return;
+		}
+
 		try {
 			setLoading(true);
 			const res = await getContribution(carData);
