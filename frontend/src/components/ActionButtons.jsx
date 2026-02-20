@@ -4,10 +4,10 @@ const ActionButtons = ({ onPredict, onShap, loading }) => {
 	return (
 		<div>
 			<button onClick={onPredict} disabled={loading}>
-				Predict Price
+				{loading ? "Loading..." : "Predict Price"}
 			</button>
 			<button onClick={onShap} disabled={loading}>
-				Shap Analysis
+				{loading ? "Loading" : "Shap Analysis"}
 			</button>
 		</div>
 	);

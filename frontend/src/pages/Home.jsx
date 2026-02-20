@@ -1,41 +1,43 @@
 import React, { useState } from "react";
 import CarForm from "../components/CarForm";
 import ActionButtons from "../components/ActionButtons";
-import { getPrice , getContribution } from "../api/carApi";
+import { getPrice, getContribution } from "../api/carApi";
+import PredictionResults from "../components/PredictionResults";
+import ShapResults from "../components/ShapResults";
 
 const Home = () => {
 	const [carData, setCarData] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [prediction, setPrediction] = useState(null);
-	const [shap, setShap] = useState(null)
+	const [shap, setShap] = useState(null);
 
 	const handlePredict = async () => {
-		try{
+		try {
 			setLoading(true);
 			const res = await getPrice(carData);
-			console.log(res.data);
-		}
-		catch(error){
+
+			setPrediction(res.data.predicted_price);
+			setShap(null);
+		} catch (error) {
 			console.log("Error fetching data: ", error);
-		}
-		finally{
+		} finally {
 			setLoading(false);
 		}
-	}
+	};
 
 	const handleShap = async () => {
-		try{
+		try {
 			setLoading(true);
 			const res = await getContribution(carData);
-			console.log(res.data);
-		}
-		catch(error){
+
+			setShap(res.data);
+			setPrediction(null);
+		} catch (error) {
 			console.log("Error fetching data: ", error);
-		}
-		finally{
+		} finally {
 			setLoading(false);
 		}
-	}
+	};
 
 	return (
 		<>
@@ -43,9 +45,16 @@ const Home = () => {
 
 			<CarForm setCarData={setCarData} />
 
-			<ActionButtons onPredict={handlePredict} onShap={handleShap} loading={loading}/>
+			<ActionButtons
+				onPredict={handlePredict}
+				onShap={handleShap}
+				loading={loading}
+			/>
 
-			<pre>{JSON.stringify(carData, null, 2)}</pre>
+			{prediction && <PredictionResults value={prediction} />}
+			{shap && <ShapResults data={shap} />}
+
+			{/* <pre>{JSON.stringify(carData, null, 2)}</pre> */}
 		</>
 	);
 };
