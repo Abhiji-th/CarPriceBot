@@ -1,39 +1,35 @@
-const PYTHON_API = 'http://localhost:5000'
+const PYTHON_API = "http://localhost:5000";
 
 export const getPredictPrice = async (req, res, next) => {
-    try{
-        const result = await fetch(`${PYTHON_API}/predict_price`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(req.body)
-        });
+	try {
+		const result = await fetch(`${PYTHON_API}/predict_price`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(req.body),
+		});
 
-        const data = await result.json();
-        data.predicted_price = Number(data.predicted_price.toFixed(2));
-        res.send(data);
-    }
-    catch(error){
-        console.error(error);
-    }
-}
+		const data = await result.json();
+		res.send(data);
+	} catch (error) {
+		console.error(error);
+	}
+};
 
-export const getMaxContribution = async (req, res, next)=>{
-    try{
-        const result = await fetch(`${PYTHON_API}/max_contribution`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(req.body)
-        });
-        
-        const data = await result.json();
-        data.percentage_contribution = Number(data.percentage_contribution.toFixed(2));
-        res.send(data);
-    }
-    catch(error){
-        console.error(error);
-    }
-}
+export const getMaxContribution = async (req, res, next) => {
+	try {
+		const result = await fetch(`${PYTHON_API}/max_contribution`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(req.body),
+		});
+
+		const data = await result.json();
+		res.send(data);
+	} catch (error) {
+		console.error(error);
+	}
+};

@@ -215,10 +215,15 @@ function CarForm({ setCarData }) {
 	};
 
 	return (
-		<div>
+		<div className="mb-4 grid grid-cols-2 gap-4">
 			<h2>Enter car details</h2>
 
-			<select name="brand" value={form.brand} onChange={handleChange}>
+			<select
+				name="brand"
+				value={form.brand}
+				onChange={handleChange}
+				className="border p-2 rounded-md focus:ring-2 focus:ring-blue-400"
+			>
 				<option value="">Select brand</option>
 				{brands.map((brand) => (
 					<option key={brand} value={brand}>
@@ -236,6 +241,7 @@ function CarForm({ setCarData }) {
 						placeholder={field.placeholder}
 						value={form[field.name]}
 						onChange={handleChange}
+						className="border p-2 rounded-md focus:ring-2 focus:ring-blue-400"
 					/>
 				))}
 		</div>

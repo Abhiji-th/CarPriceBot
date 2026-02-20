@@ -68,22 +68,26 @@ const Home = () => {
 	};
 
 	return (
-		<>
-			<h1>Used Car Price Predictor</h1>
+		<div className="min-h-screen bg-gray-100 flex justify-center items-center">
+			<div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+				<h1 className="text-3xl font-bold mb-6 text-center">
+					Used Car Price Predictor
+				</h1>
 
-			<CarForm setCarData={setCarData} />
+				<CarForm setCarData={setCarData} />
 
-			<ActionButtons
-				onPredict={handlePredict}
-				onShap={handleShap}
-				loading={loading}
-			/>
+				<ActionButtons
+					onPredict={handlePredict}
+					onShap={handleShap}
+					loading={loading}
+				/>
 
-			{prediction && <PredictionResults value={prediction} />}
-			{shap && <ShapResults data={shap} />}
+				{prediction && <PredictionResults value={prediction} />}
+				{shap && <ShapResults data={shap} />}
 
-			{/* <pre>{JSON.stringify(carData, null, 2)}</pre> */}
-		</>
+				{/* <pre>{JSON.stringify(carData, null, 2)}</pre> */}
+			</div>
+		</div>
 	);
 };
 
