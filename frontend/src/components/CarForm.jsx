@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 
 function CarForm({ setCarData }) {
-	const fields = [
-		{ name: "brand", placeholder: "Brand" },
-		{ name: "model", placeholder: "Model" },
+	const numFields = [
 		{ name: "year_of_manufacture", placeholder: "Year" },
 		{ name: "km_driven", placeholder: "KM Driven" },
-		{ name: "fuel_type", placeholder: "Fuel Type" },
-		{ name: "transmission_type", placeholder: "Transmission" },
 		{ name: "mileage", placeholder: "Mileage" },
 		{ name: "engine", placeholder: "Engine" },
 		{ name: "max_power", placeholder: "Max Power" },
@@ -64,7 +60,7 @@ function CarForm({ setCarData }) {
 		"Force",
 	];
 
-	const model = [
+	const models = [
 		"Alto",
 		"Grand",
 		"i20",
@@ -187,9 +183,9 @@ function CarForm({ setCarData }) {
 		"Gurkha",
 	];
 
-	const fuel_type = ["Petrol", "Diesel", "CNG", "LPG", "Electric"];
+	const fuel_types = ["Petrol", "Diesel", "CNG", "LPG", "Electric"];
 
-	const transmission_type = ["Manual", "Automatic"];
+	const transmission_types = ["Manual", "Automatic"];
 
 	const [form, setForm] = useState({
 		brand: "",
@@ -232,7 +228,49 @@ function CarForm({ setCarData }) {
 				))}
 			</select>
 
-			{fields
+			<select
+				name="model"
+				value={form.model}
+				onChange={handleChange}
+				className="border p-2 rounded-md focus:ring-2 focus:ring-blue-400"
+			>
+				<option value="">Select model</option>
+				{models.map((model) => (
+					<option key={model} value={model}>
+						{model}
+					</option>
+				))}
+			</select>
+
+			<select
+				name="fuel_type"
+				value={form.fuel_type}
+				onChange={handleChange}
+				className="border p-2 rounded-md focus:ring-2 focus:ring-blue-400"
+			>
+				<option value="">Select fuel type</option>
+				{fuel_types.map((fuel_type) => (
+					<option key={fuel_type} value={fuel_type}>
+						{fuel_type}
+					</option>
+				))}
+			</select>
+
+			<select
+				name="transmission_type"
+				value={form.transmission_type}
+				onChange={handleChange}
+				className="border p-2 rounded-md focus:ring-2 focus:ring-blue-400"
+			>
+				<option value="">Select transmission type</option>
+				{transmission_types.map((transmission_type) => (
+					<option key={transmission_type} value={transmission_type}>
+						{transmission_type}
+					</option>
+				))}
+			</select>
+
+			{numFields
 				.filter((field) => field.name != "brand")
 				.map((field) => (
 					<input

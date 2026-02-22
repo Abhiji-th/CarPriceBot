@@ -33,7 +33,7 @@ const Home = () => {
 
 		try {
 			setLoading(true);
-			const res = await getPrice(carData);
+			const res = await getPrice(formattedData);
 
 			setPrediction(res.data.predicted_price);
 			setShap(null);
@@ -56,7 +56,7 @@ const Home = () => {
 
 		try {
 			setLoading(true);
-			const res = await getContribution(carData);
+			const res = await getContribution(formattedData);
 
 			setShap(res.data);
 			setPrediction(null);

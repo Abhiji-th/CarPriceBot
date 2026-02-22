@@ -15,7 +15,7 @@ const ActionButtons = ({ onPredict, onShap, loading }) => {
 				disabled={loading}
 				className="ml-2 flex-1 bg-green-600 text-white p-2 rounded-md hover:bg-green-700"
 			>
-				{loading ? "Loading" : "Shap Analysis"}
+				{loading ? "Loading..." : "Shap Analysis"}
 			</button>
 		</div>
 	);
