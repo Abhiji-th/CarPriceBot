@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"start": "node server",
-		"dev": "concurrently \"nodemon --env-file=.env server\" \"python ../ml-service/src/app.py\" \"npm run dev --prefix ../frontend\""
+		"dev": "concurrently \"nodemon --env-file=.env server\" \"python ../ml-service/src/app.py\" \"npm run dev --prefix ../frontend\"",
+		"seed": "node seeds/carData.seed.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -17,8 +18,10 @@
 	},
 	"dependencies": {
 		"cors": "^2.8.6",
+		"dotenv": "^17.3.1",
 		"express": "^5.2.1",
 		"flask-cors": "^0.0.1",
+		"mongoose": "^9.2.2",
 		"shap": "^1.1.3"
 	}
 }

@@ -1,3 +1,5 @@
+import carData from "../models/carData.model.js";
+
 const PYTHON_API = "http://localhost:5000";
 
 export const getPredictPrice = async (req, res, next) => {
@@ -31,5 +33,14 @@ export const getMaxContribution = async (req, res, next) => {
 		res.send(data);
 	} catch (error) {
 		console.error(error);
+	}
+};
+
+export const getCarData = async (req, res, next) => {
+	try {
+		const result = await carData.find({});
+		res.json(result);
+	} catch (error) {
+		res.status(500).json({ msg: "Error fetching from MongoDB" });
 	}
 };
