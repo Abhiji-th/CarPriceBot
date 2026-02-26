@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getCarData } from "../api/carApi";
 
 function CarForm({ setCarData }) {
+	const [brands, setBrands] = useState([]);
+	const [models, setModels] = useState([]);
+	const [fuel_types, setFuelTypes] = useState([]);
+	const [transmission_types, setTransmissionTypes] = useState([]);
+
 	const numFields = [
 		{ name: "year_of_manufacture", placeholder: "Year" },
 		{ name: "km_driven", placeholder: "KM Driven" },
@@ -24,6 +30,22 @@ function CarForm({ setCarData }) {
 			form.seats
 		);
 	};
+
+	useEffect(() => {
+		const handleCarData = async () => {
+			try{
+				const res = await getCarData();
+				setBrands(res.data[0].brands);
+				setModels(res.data[0].models);
+				setFuelTypes(res.data[0].fuel_types);
+				setTransmissionTypes(res.data[0].transmission_types);
+			}
+			catch(error){
+				console.log("Error fetching carData: ", error);
+			}
+		};
+		handleCarData();
+	}, []);
 
 	const [form, setForm] = useState({
 		brand: "",
