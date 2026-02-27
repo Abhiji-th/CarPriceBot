@@ -1,23 +1,45 @@
-# Ignore Python cache files
+# ===============================
+# Python
+# ===============================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
 
+# Virtual environments
+venv/
+.env/
+.env*/
+env/
+.venv/
+botenv/
+shapenv/
 
-# Ignore virtual environments
-*.env
-api/env/
-chatbot/env/
+# ===============================
+# Node.js
+# ===============================
+node_modules/
 
-# Ignore Jupyter Notebook checkpoints
+# ===============================
+# Environment variables
+# ===============================
+.env
+.env.*
+env.bat
+
+# ===============================
+# Jupyter Notebook
+# ===============================
 .ipynb_checkpoints/
 
-# Ignore VS Code settings folder
+# ===============================
+# VS Code
+# ===============================
 .vscode/
 
-# Ignore system files
+# ===============================
+# System files
+# ===============================
 .DS_Store
 Thumbs.db
 
@@ -34,3 +56,9 @@ chatbot/models/*
 
 # Ignore Rasa cache
 .rasa/cache/
+# ===============================
+# ML / Model files
+# ===============================
+models/old/
+
+.vite/
