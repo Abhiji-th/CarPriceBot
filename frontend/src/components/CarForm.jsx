@@ -35,12 +35,12 @@ function CarForm({ setCarData }) {
 		const handleCarData = async () => {
 			try {
 				const res = await getCarData();
-				const data = res.data;
+				const data = res?.data || {};
 
-				setBrands(data.brands);
-				setModels(data.models);
-				setFuelTypes(data.fuel_types);
-				setTransmissionTypes(data.transmission_types);
+				setBrands(data?.brands || []);
+				setModels(data?.models || []);
+				setFuelTypes(data?.fuel_types || []);
+				setTransmissionTypes(data?.transmission_types || []);
 			} catch (error) {
 				console.log("Error fetching carData: ", error);
 			}
