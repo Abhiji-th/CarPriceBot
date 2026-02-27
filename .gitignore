@@ -10,10 +10,8 @@ __pycache__/
 venv/
 .env/
 .env*/
-env/
+rasa_env/
 .venv/
-botenv/
-shapenv/
 
 # ===============================
 # Node.js
@@ -55,7 +53,7 @@ chatbot/models/*
 *.bat
 
 # Ignore Rasa cache
-.rasa/cache/
+.rasa/
 # ===============================
 # ML / Model files
 # ===============================

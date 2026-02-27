@@ -340,9 +340,25 @@ class ActionPredictCarPrice(Action):
         # Construct the API URL
         api_url = f"http://127.0.0.1:5000/predict_price?brand={brand}&model={model}&year_of_manufacture={year_of_manufacture}&km_driven={km_driven}&fuel_type={fuel_type}&transmission_type={transmission_type}&mileage={mileage}&engine={engine}&max_power={max_power}&seats={seats}"
 
+        payload = {
+            "brand": brand,
+            "model": model,
+            "year_of_manufacture": year_of_manufacture,
+            "km_driven": km_driven,
+            "fuel_type": fuel_type,
+            "transmission_type": transmission_type,
+            "mileage": mileage,
+            "engine": engine,
+            "max_power": max_power,
+            "seats": seats
+        }
+
         try:
             # Make a GET request to the API
-            response = requests.get(api_url)
+            response = requests.post(
+                api_url,
+                json=payload
+            )
             response.raise_for_status()  # Raise an error for bad responses
 
             # Extract price from the response
