@@ -8,4 +8,4 @@ export const getPrice = (data) => API.post("/predict_price", data);
 
 export const getContribution = (data) => API.post("/max_contribution", data);
 
-export const getCarData = (data) => API.get("/carData");
+export const getCarData = () => API.get("/carData");

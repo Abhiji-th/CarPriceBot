@@ -1,34 +1,49 @@
-# Ignore Python cache files
+# ===============================
+# Python
+# ===============================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-#Ignore Node modules
-**/node_modules
-
-# Ignore environment folders and files
-**/.env
-**/.env.*
-env.bat
-
+# Virtual environments
+venv/
+.env/
+.env*/
+env/
+.venv/
 botenv/
 shapenv/
-venv/
-**/env/
-**/venv/
-**/.venv/
 
-#Ignore node modules
-**/node_modules/
+# ===============================
+# Node.js
+# ===============================
+node_modules/
 
-# Ignore Jupyter Notebook checkpoints
+# ===============================
+# Environment variables
+# ===============================
+.env
+.env.*
+env.bat
+
+# ===============================
+# Jupyter Notebook
+# ===============================
 .ipynb_checkpoints/
 
-# Ignore VS Code settings folder
+# ===============================
+# VS Code
+# ===============================
 .vscode/
 
-# Ignore system files
+# ===============================
+# System files
+# ===============================
 .DS_Store
 Thumbs.db
 
-# Ignore previous models
-models/old
+# ===============================
+# ML / Model files
+# ===============================
+models/old/

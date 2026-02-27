@@ -33,14 +33,15 @@ function CarForm({ setCarData }) {
 
 	useEffect(() => {
 		const handleCarData = async () => {
-			try{
+			try {
 				const res = await getCarData();
-				setBrands(res.data[0].brands);
-				setModels(res.data[0].models);
-				setFuelTypes(res.data[0].fuel_types);
-				setTransmissionTypes(res.data[0].transmission_types);
-			}
-			catch(error){
+				const data = res.data;
+
+				setBrands(data.brands);
+				setModels(data.models);
+				setFuelTypes(data.fuel_types);
+				setTransmissionTypes(data.transmission_types);
+			} catch (error) {
 				console.log("Error fetching carData: ", error);
 			}
 		};

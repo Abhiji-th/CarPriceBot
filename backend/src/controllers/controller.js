@@ -38,8 +38,8 @@ export const getMaxContribution = async (req, res, next) => {
 
 export const getCarData = async (req, res, next) => {
 	try {
-		const result = await carData.find({});
-		res.json(result);
+		const result = await carData.findOne({});
+		res.status(200).json(result);
 	} catch (error) {
 		res.status(500).json({ msg: "Error fetching from MongoDB" });
 	}
