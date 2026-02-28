@@ -4,6 +4,8 @@ import ActionButtons from "../components/ActionButtons";
 import { getPrice, getContribution } from "../api/carApi";
 import PredictionResults from "../components/PredictionResults";
 import ShapResults from "../components/ShapResults";
+import { sendMessage } from "../api/chatApi";
+import ChatBot from "../components/ChatBot";
 
 const Home = () => {
 	const [carData, setCarData] = useState({});
@@ -67,6 +69,12 @@ const Home = () => {
 		}
 	};
 
+	const getMessage = async () => {
+		const res = await sendMessage("hi");
+		console.log(res.data);
+	}
+	getMessage();
+
 	return (
 		<div className="min-h-screen bg-gray-100 flex justify-center items-center">
 			<div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
@@ -84,8 +92,8 @@ const Home = () => {
 
 				{prediction && <PredictionResults value={prediction} />}
 				{shap && <ShapResults data={shap} />}
-
-				{/* <pre>{JSON.stringify(carData, null, 2)}</pre> */}
+			
+				<ChatBot/>
 			</div>
 		</div>
 	);
