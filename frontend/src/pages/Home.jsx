@@ -69,12 +69,6 @@ const Home = () => {
 		}
 	};
 
-	const getMessage = async () => {
-		const res = await sendMessage("hi");
-		console.log(res.data);
-	}
-	getMessage();
-
 	return (
 		<div className="min-h-screen bg-gray-100 flex justify-center items-center">
 			<div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">

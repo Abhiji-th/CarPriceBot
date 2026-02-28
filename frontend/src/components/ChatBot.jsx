@@ -9,6 +9,8 @@ const ChatBot = () => {
         if(!input) return;
 
         const userMsg = {sender: "user", text: input}
+        setInput("");
+        
         setMessages((prev) => [...prev, userMsg]);
 
         const res = await sendMessage(input);
@@ -19,7 +21,6 @@ const ChatBot = () => {
         }));
 
         setMessages((prev) => [...prev, ...botMessages]);
-        setInput("");
     }
 
   return (
@@ -33,7 +34,7 @@ const ChatBot = () => {
                 ))
             }
         </div>
-        <input value = {input} onChange = {(e) => setInput(e.target.value)} /> 
+        <input name="input" value = {input} onChange = {(e) => setInput(e.target.value)} /> 
         <button onClick={handleSend}>Send</button>
     </div>
   )
