@@ -5,7 +5,19 @@
 	"type": "module",
 	"scripts": {
 		"start": "node server",
-		"dev": "concurrently \"nodemon --env-file=.env server\" \"python ../ml-service/src/app.py\" \"npm run dev --prefix ../frontend\"",
+
+		"backend": "nodemon --env-file=.env server",
+
+		"frontend": "cd ../frontend && npm run dev",
+
+		"mlservice": "cd .. && venv\\Scripts\\activate && python ml-service/src/app.py",
+
+		"rasa": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run --enable-api --cors *",
+
+		"actions": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run actions",
+
+		"dev": "concurrently \"npm run rasa\" \"npm run actions\" \"npm run backend\" \"npm run mlservice\" \"npm run frontend\"",
+
 		"seed": "node seeds/carData.seed.js"
 	},
 	"keywords": [],
