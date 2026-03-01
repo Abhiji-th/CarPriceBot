@@ -12,9 +12,11 @@
 
 		"mlservice": "cd .. && venv\\Scripts\\activate && python ml-service/src/app.py",
 
-		"rasa": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run --enable-api --cors *",
+		"rasa": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run --enable-api --debug --cors *",
 
-		"actions": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run actions",
+		"rasa train": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa train",
+
+		"actions": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && watchmedo auto-restart --patterns=\"*.py\" --recursive -- rasa run actions",
 
 		"dev": "concurrently \"npm run rasa\" \"npm run actions\" \"npm run backend\" \"npm run mlservice\" \"npm run frontend\"",
 

@@ -76,7 +76,7 @@ const Home = () => {
 					Used Car Price Predictor
 				</h1>
 
-				<CarForm setCarData={setCarData} />
+				{/* <CarForm setCarData={setCarData} />
 
 				<ActionButtons
 					onPredict={handlePredict}
@@ -85,7 +85,7 @@ const Home = () => {
 				/>
 
 				{prediction && <PredictionResults value={prediction} />}
-				{shap && <ShapResults data={shap} />}
+				{shap && <ShapResults data={shap} />} */}
 			
 				<ChatBot/>
 			</div>
