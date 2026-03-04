@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@layer components {
+  .userMessage {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 16px;
+    margin: 6px;
+    max-width: 70%;
+  }
+
+  .botMessage {
+    align-self: flex-start;
+    background-color: #e5e5ea;
+    color: black;
+    padding: 10px 14px;
+    border-radius: 16px;
+    margin: 6px;
+    max-width: 70%;
+  }
+
+  .chatContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+}

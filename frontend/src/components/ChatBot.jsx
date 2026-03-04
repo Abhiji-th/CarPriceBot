@@ -6,6 +6,7 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [currentSlot, setCurrentSlot] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
   const chatRef = useRef();
 
   const [brands, setBrands] = useState([]);
@@ -39,7 +40,9 @@ const ChatBot = () => {
 
     setMessages((prev) => [...prev, userMsg]);
 
+    setIsTyping(true);
     const res = await sendMessage(input);
+    setIsTyping(false);
 
     res.data.forEach((msg) => {
       if (msg.text) {
@@ -63,12 +66,16 @@ const ChatBot = () => {
 
   return (
     <div>
-      <div>
+      <div className="chatContainer">
         {messages.map((msg, i) => (
-          <p key={i}>
-            <b>{msg.sender}:</b> {msg.text}
-          </p>
+          <div
+            key={i}
+            className={msg.sender === "user" ? "userMessage" : "botMessage"}
+          >
+            {msg.text}
+          </div>
         ))}
+        {isTyping && <div className="botMessage">typing...</div>}
         <div ref={chatRef}></div>
       </div>
       {currentSlot?.type === "dropdown" && (
