@@ -14,7 +14,7 @@
 
 		"rasa": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run --enable-api --debug --cors *",
 
-		"rasa train": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa train",
+		"rasa-train": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa train",
 
 		"actions": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && watchmedo auto-restart --patterns=\"*.py\" --recursive -- rasa run actions",
 

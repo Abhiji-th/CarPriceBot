@@ -1,17 +1,11 @@
 version: "3.1"
 
 rules:
-  # - rule: Say goodbye anytime the user says goodbye
-  #   steps:
-  #     - intent: goodbye
-  #     - action: utter_goodbye
+  # ===============================
+  # BASIC INTENTS
+  # ===============================
 
-  # - rule: Say goodbye anytime the user says stop
-  #   steps:
-  #     - intent: stop
-  #     - action: utter_goodbye
-
-  - rule: Say 'I am a bot' anytime the user challenges
+  - rule: Say I am a bot anytime user challenges
     steps:
       - intent: bot_challenge
       - action: utter_iamabot
@@ -21,6 +15,10 @@ rules:
       - intent: greet
       - action: utter_greet
 
+  # ===============================
+  # FORM ACTIVATION
+  # ===============================
+
   - rule: Activate car details form
     condition:
       - active_loop: null
@@ -29,7 +27,11 @@ rules:
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Submit car details form
+  # ===============================
+  # FORM SUBMISSION
+  # ===============================
+
+  - rule: After form submission
     condition:
       - active_loop: car_details_form
     steps:
@@ -38,41 +40,81 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: utter_slots_values
+
+  - rule: Confirm and predict price
+    steps:
       - intent: affirm
       - action: action_predict_car_price
 
-  - rule: Deny car details form and clear values
-    condition:
-      - active_loop: car_details_form
+  - rule: Deny and clear slots after confirmation
     steps:
-      - action: car_details_form
-      - active_loop: null
-      - slot_was_set:
-          - requested_slot: null
-      - action: utter_slots_values
       - intent: deny
-      - action: action_clear_slots # Message to inform user that values have been cleared
+      - action: action_clear_slots
 
-  - rule: Interruption in Car Form
+  # ===============================
+  # INTERRUPTIONS DURING FORM
+  # ===============================
+
+  - rule: Bot challenge during form
     condition:
-      # Condition that form is active.
       - active_loop: car_details_form
     steps:
-      # This unhappy path handles the case of an intent `bot_challenge`.
       - intent: bot_challenge
       - action: utter_iamabot
-      # Return to form after handling the `bot_challenge` intent
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  - rule: Stop during form
+    condition:
+      - active_loop: car_details_form
+    steps:
+      - intent: stop
+      - action: action_deactivate_loop
+      - active_loop: null
+      - action: action_clear_slots
+      - action: utter_goodbye
+
+  - rule: Goodbye during form
+    condition:
+      - active_loop: car_details_form
+    steps:
+      - intent: goodbye
+      - action: action_deactivate_loop
+      - active_loop: null
+      - action: action_clear_slots
+      - action: utter_goodbye
+
+  # ===============================
+  # STOP / GOODBYE OUTSIDE FORM
+  # ===============================
+
+  - rule: Stop during normal flow
+    condition:
+      - active_loop: null
+    steps:
+      - intent: stop
+      - action: action_clear_slots
+      - action: utter_goodbye
+
+  - rule: Goodbye during normal flow
+    condition:
+      - active_loop: null
+    steps:
+      - intent: goodbye
+      - action: action_clear_slots
+      - action: utter_goodbye
+
+  # ===============================
+  # NLU FALLBACK
+  # ===============================
+
+  - rule: Fallback outside form
     steps:
       - intent: nlu_fallback
       - action: utter_please_rephrase
 
-  - rule: Ask the user to rephrase when form is active
+  - rule: Fallback during form
     condition:
-      # Condition that form is active.
       - active_loop: car_details_form
     steps:
       - intent: nlu_fallback
@@ -80,141 +122,90 @@ rules:
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Stop or Exit during Car Form
+  # ===============================
+  # SHAP / EXPLANATION
+  # ===============================
+
+  - rule: Ask SHAP during form
     condition:
-      # Condition that form is active.
       - active_loop: car_details_form
-    steps:
-      # Handles user intent to stop or exit the form
-      - intent: stop
-      # Deactivate the form
-      - action: action_deactivate_loop
-      - active_loop: null
-      - action: action_clear_slots # Message to inform user that values have been cleared
-
-  - rule: Bye during Car Form
-    condition:
-      # Condition that form is active.
-      - active_loop: car_details_form
-    steps:
-      # Handles user intent to stop or exit the form
-      - intent: goodbye
-      # Deactivate the form
-      - action: action_deactivate_loop
-      - active_loop: null
-      - action: action_clear_slots # Message to inform user that values have been cleared
-
-  - rule: Stop or Exit during normal flow
-    condition:
-      # Condition that form is active.
-      - active_loop: null
-    steps:
-      # Handles user intent to stop or exit the form
-      - intent: stop
-      - action: action_clear_slots # Message to inform user that values have been cleared
-
-  - rule: Bye during during normal flow
-    condition:
-      # Condition that form is active.
-      - active_loop: null
-    steps:
-      # Handles user intent to stop or exit the form
-      - intent: goodbye
-      - action: action_clear_slots # Message to inform user that values have been cleared
-
-  - rule: Respond to Ask Shap Intent While Form is Active
-    condition:
-      - active_loop: car_details_form # Check if the car details form is active
     steps:
       - intent: ask_shap
-      - action: action_max_contribution # Call the action to fetch max contribution
-      # Return to form after handling the `bot_challenge` intent
+      - action: action_max_contribution
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Handle Ask Shap Intent in Normal Conditions
+  - rule: Ask SHAP outside form
     condition:
-      - active_loop: null # Ensure no form is active
+      - active_loop: null
     steps:
       - intent: ask_shap
-      - action: action_max_contribution # Custom action to fetch and respond with the max contributing feature
+      - action: action_max_contribution
 
-# Handling general questions
+  # ===============================
+  # GENERAL INFORMATION
+  # ===============================
 
-  - rule: Respond to Mileage Query
+  - rule: Mileage info
     condition:
       - active_loop: null
-    steps:
-      - intent: ask_mileage # Intent for asking about mileage
-      - action: utter_mileage_info
-
-  - rule: Respond to Value Calculation Query
-    condition:
-      - active_loop: null
-    steps:
-      - intent: ask_value_calculation # Intent for asking about value calculation
-      - action: utter_value_calculation_info
-
-  - rule: Handle General Queries While Form is Active
-    condition:
-      - active_loop: car_details_form # Check if the car details form is active
     steps:
       - intent: ask_mileage
       - action: utter_mileage_info
-      # Return to form after answering the question
+
+  - rule: Mileage info during form
+    condition:
+      - active_loop: car_details_form
+    steps:
+      - intent: ask_mileage
+      - action: utter_mileage_info
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Handle Value Calculation Query While Form is Active
+  - rule: Value calculation info
     condition:
-      - active_loop: car_details_form # Check if the car details form is active
+      - active_loop: null
     steps:
       - intent: ask_value_calculation
       - action: utter_value_calculation_info
-      # Return to form after answering the question
+
+  - rule: Value calculation info during form
+    condition:
+      - active_loop: car_details_form
+    steps:
+      - intent: ask_value_calculation
+      - action: utter_value_calculation_info
       - action: car_details_form
       - active_loop: car_details_form
 
-  - rule: Respond to Engine Capacity Query
+  - rule: Engine capacity info
     condition:
       - active_loop: null
-    steps:
-      - intent: ask_engine_capacity # Intent for asking about engine capacity
-      - action: utter_engine_capacity_info
-
-  - rule: Handle Engine Capacity Query While Form is Active
-    condition:
-      - active_loop: car_details_form # Check if the car details form is active
     steps:
       - intent: ask_engine_capacity
       - action: utter_engine_capacity_info
-      # Return to form after answering the question
-      - action: car_details_form
-      - active_loop: car_details_form 
 
-  - rule: Respond to Maximum Power Query
+  - rule: Engine capacity info during form
+    condition:
+      - active_loop: car_details_form
+    steps:
+      - intent: ask_engine_capacity
+      - action: utter_engine_capacity_info
+      - action: car_details_form
+      - active_loop: car_details_form
+
+  - rule: Maximum power info
     condition:
       - active_loop: null
     steps:
-      - intent: ask_maximum_power # Intent for asking about maximum power
+      - intent: ask_maximum_power
       - action: utter_maximum_power_info
 
-  - rule: Handle Maximum Power Query While Form is Active
+  - rule: Maximum power info during form
     condition:
-      - active_loop: car_details_form # Check if the car details form is active
+      - active_loop: car_details_form
     steps:
       - intent: ask_maximum_power
       - action: utter_maximum_power_info
-      # Return to form after answering the question
       - action: car_details_form
       - active_loop: car_details_form
-
-
-  - rule: Bye during during normal flow
-    condition:
-      - active_loop: car_details_form # Check if the car details form is active
-    steps:
-      - intent: inform
-      - action: car_details_form
-      - active_loop: car_details_form
-

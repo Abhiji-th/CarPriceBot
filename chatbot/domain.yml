@@ -19,17 +19,16 @@ actions:
   - utter_greet
   - utter_goodbye
   - utter_iamabot
-  - utter_ask_brand
-  - utter_ask_model
-
-  - utter_ask_km_driven
-  - utter_ask_mileage
-  - utter_ask_fuel_type
-  - utter_ask_transmission_type
-  - utter_ask_engine
-  - utter_ask_max_power
-  - utter_ask_seats
-  - utter_ask_year_of_manufacture
+  - action_ask_brand
+  - action_ask_model
+  - action_ask_km_driven
+  - action_ask_mileage
+  - action_ask_fuel_type
+  - action_ask_transmission_type
+  - action_ask_engine
+  - action_ask_max_power
+  - action_ask_seats
+  - action_ask_year_of_manufacture
   - action_clear_slots
   - action_predict_car_price
   - utter_please_rephrase
@@ -148,56 +147,6 @@ responses:
     - text: Alright, take care! If you need anything else, just say "Hi" to start over.
   utter_iamabot:
     - text: Yep, I’m a virtual assistant powered by Rasa, here to predict the price of your car!
-  utter_ask_brand:
-    - text: Great! Let's start with the basics. What’s the brand of your car?
-      metadata:
-        slot: "brand"
-        type: "dropdown"
-  utter_ask_model:
-    - text: Got it. And what’s the model?
-      metadata:
-        slot: "model"
-        type: "dropdown"
-  utter_ask_km_driven:
-    - text: How many kilometers have you driven it so far?
-      metadata:
-        slot: "km_driven"
-        type: "number"
-  utter_ask_mileage:
-    - text: Thanks! What’s the mileage?
-      metadata:
-        slot: "mileage"
-        type: "number"
-  utter_ask_fuel_type:
-    - text: And what’s the fuel type? Petrol, diesel, or something else?
-      metadata:
-        slot: "fuel_type"
-        type: "dropdown"
-  utter_ask_transmission_type:
-    - text: Is it a manual or automatic transmission?
-      metadata:
-        slot: "transmission_type"
-        type: "dropdown"
-  utter_ask_engine:
-    - text: Can you tell me the engine capacity? (e.g., 1500cc)
-      metadata:
-        slot: "engine"
-        type: "number"
-  utter_ask_max_power:
-    - text: What’s the maximum power in bhp?
-      metadata:
-        slot: "max_power"
-        type: "number"
-  utter_ask_seats:
-    - text: How many seats are there in your car?
-      metadata:
-        slot: "seats"
-        type: "number"
-  utter_ask_year_of_manufacture:
-    - text: Finally, what year was your car manufactured?
-      metadata:
-        slot: "year"
-        type: "number"
   utter_slots_values:
     - text: "Let’s confirm: your car is a {brand} {model}, with {km_driven} km driven, {mileage} mileage, {fuel_type} fuel, {transmission_type} transmission, {engine} engine capacity, {max_power} bhp power, {seats} seats, and was manufactured in {year_of_manufacture}. Is everything correct?"
   utter_please_rephrase:

@@ -1,55 +1,139 @@
-import React, { useEffect, useState, useRef } from 'react'
-import {sendMessage} from '../api/chatApi'
+import React, { useEffect, useState, useRef } from "react";
+import { sendMessage } from "../api/chatApi";
+import { getCarData } from "../api/carApi";
 
 const ChatBot = () => {
-    const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState("");
-    const [currentSlot, setCurrentslot] = useState(null);
-    const chatRef = useRef();
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [currentSlot, setCurrentSlot] = useState(null);
+  const chatRef = useRef();
 
-    const handleSend = async () => {
-        if(!input) return;
+  const [brands, setBrands] = useState([]);
+  const [models, setModels] = useState([]);
+  const [fuel_types, setFuelTypes] = useState([]);
+  const [transmission_types, setTransmissionTypes] = useState([]);
+  const yearOptions = Array.from({ length: 25 }, (_, i) => 2000 + i);
 
-        const userMsg = {sender: "user", text: input}
-        setInput("");
-        
-        setMessages((prev) => [...prev, userMsg]);
+  useEffect(() => {
+    const handleCarData = async () => {
+      try {
+        const res = await getCarData();
+        const data = res?.data || {};
 
-        const res = await sendMessage(input);
-        console.log(res.data);
+        setBrands(data?.brands || []);
+        setModels(data?.models || []);
+        setFuelTypes(data?.fuel_types || []);
+        setTransmissionTypes(data?.transmission_types || []);
+      } catch (error) {
+        console.log("Error fetching carData: ", error);
+      }
+    };
+    handleCarData();
+  }, []);
 
-        // setCurrentslot(res.data.slot);
+  const handleSend = async () => {
+    if (!input) return;
 
-        const botMessages = res.data.map((msg) => ({
+    const userMsg = { sender: "user", text: input };
+    setInput("");
+
+    setMessages((prev) => [...prev, userMsg]);
+
+    const res = await sendMessage(input);
+
+    res.data.forEach((msg) => {
+      if (msg.text) {
+        setMessages((prev) => [
+          ...prev,
+          {
             sender: "bot",
             text: msg.text,
-            slot: msg.slot,
-            type: msg.type,
-        }));
+          },
+        ]);
+      }
+      if (msg.custom) {
+        setCurrentSlot(msg.custom);
+      }
+    });
+  };
 
-        setMessages((prev) => [...prev, ...botMessages]);
-    }
-
-    useEffect(()=>{
-        chatRef.current?.scrollIntoView({behaviour: "smooth"});
-    }, [messages]);
+  useEffect(() => {
+    chatRef.current?.scrollIntoView({ behaviour: "smooth" });
+  }, [messages]);
 
   return (
     <div>
-        <div>
-            {
-                messages.map((msg, i) => (
-                    <p key={i}>
-                        <b>{msg.sender}:</b> {msg.text}
-                    </p>
-                ))
+      <div>
+        {messages.map((msg, i) => (
+          <p key={i}>
+            <b>{msg.sender}:</b> {msg.text}
+          </p>
+        ))}
+        <div ref={chatRef}></div>
+      </div>
+      {currentSlot?.type === "dropdown" && (
+        <select
+          name="dropdowns"
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSend();
             }
-            <div ref={chatRef}></div>
-        </div>
-        <input name="input" value = {input} onChange = {(e) => setInput(e.target.value)} /> 
-        <button onClick={handleSend}>Send</button>
-    </div>
-  )
-}
+          }}
+        >
+          <option>Select option</option>
 
-export default ChatBot
+          {currentSlot.slot === "brand" &&
+            brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+
+          {currentSlot.slot === "model" &&
+            models.map((model) => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+
+          {currentSlot.slot === "fuel_type" &&
+            fuel_types.map((fuel_type) => (
+              <option key={fuel_type} value={fuel_type}>
+                {fuel_type}
+              </option>
+            ))}
+
+          {currentSlot.slot === "transmission_type" &&
+            transmission_types.map((transmission_type) => (
+              <option key={transmission_type} value={transmission_type}>
+                {transmission_type}
+              </option>
+            ))}
+
+          {currentSlot.slot === "year_of_manufacture" &&
+            yearOptions.map((year_of_manufacture) => (
+              <option key={year_of_manufacture} value={year_of_manufacture}>
+                {year_of_manufacture}
+              </option>
+            ))}
+        </select>
+      )}
+      {(currentSlot?.type === "number" || !currentSlot) && (
+        <input
+          name="staticInput"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSend();
+            }
+          }}
+        ></input>
+      )}
+      <button onClick={handleSend}>Send</button>
+    </div>
+  );
+};
+
+export default ChatBot;

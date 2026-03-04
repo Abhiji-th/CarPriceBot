@@ -6,6 +6,169 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from fuzzywuzzy import process
 
+class ActionAskBrand(Action):
+    def name(self) -> Text:
+        return "action_ask_brand"
+
+    def run(
+        self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message(
+            text="Great! Let's start with the basics. What’s the brand of your car?",
+            json_message={
+                "slot": "brand",
+                "type": "dropdown"
+            }
+        )
+        return []
+
+
+class ActionAskModel(Action):
+    def name(self) -> Text:
+        return "action_ask_model"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Got it. And what’s the model?",
+            json_message={
+                "slot": "model",
+                "type": "dropdown"
+            }
+        )
+        return []
+
+
+class ActionAskKmDriven(Action):
+    def name(self) -> Text:
+        return "action_ask_km_driven"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="How many kilometers have you driven it so far?",
+            json_message={
+                "slot": "km_driven",
+                "type": "number"
+            }
+        )
+        return []
+
+
+class ActionAskMileage(Action):
+    def name(self) -> Text:
+        return "action_ask_mileage"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Thanks! What’s the mileage?",
+            json_message={
+                "slot": "mileage",
+                "type": "number"
+            }
+        )
+        return []
+
+
+class ActionAskFuelType(Action):
+    def name(self) -> Text:
+        return "action_ask_fuel_type"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="And what’s the fuel type? Petrol, diesel, or something else?",
+            json_message={
+                "slot": "fuel_type",
+                "type": "dropdown"
+            }
+        )
+        return []
+
+
+class ActionAskTransmissionType(Action):
+    def name(self) -> Text:
+        return "action_ask_transmission_type"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Is it a manual or automatic transmission?",
+            json_message={
+                "slot": "transmission_type",
+                "type": "dropdown"
+            }
+        )
+        return []
+
+
+class ActionAskEngine(Action):
+    def name(self) -> Text:
+        return "action_ask_engine"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Can you tell me the engine capacity? (e.g., 1500cc)",
+            json_message={
+                "slot": "engine",
+                "type": "number"
+            }
+        )
+        return []
+
+
+class ActionAskMaxPower(Action):
+    def name(self) -> Text:
+        return "action_ask_max_power"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="What’s the maximum power in bhp?",
+            json_message={
+                "slot": "max_power",
+                "type": "number"
+            }
+        )
+        return []
+
+
+class ActionAskSeats(Action):
+    def name(self) -> Text:
+        return "action_ask_seats"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="How many seats are there in your car?",
+            json_message={
+                "slot": "seats",
+                "type": "number"
+            }
+        )
+        return []
+
+
+class ActionAskYearOfManufacture(Action):
+    def name(self) -> Text:
+        return "action_ask_year_of_manufacture"
+
+    def run(self, dispatcher, tracker, domain):
+
+        dispatcher.utter_message(
+            text="Finally, what year was your car manufactured?",
+            json_message={
+                "slot": "year_of_manufacture",
+                "type": "number"
+            }
+        )
+        return []
+    
 class ValidateCarDetailsForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_car_details_form"
