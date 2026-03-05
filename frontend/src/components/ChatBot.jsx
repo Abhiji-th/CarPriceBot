@@ -8,6 +8,7 @@ const ChatBot = () => {
 	const [currentSlot, setCurrentSlot] = useState(null);
 	const [isTyping, setIsTyping] = useState(false);
 	const chatRef = useRef();
+	const inputRef = useRef(null);
 
 	const [brands, setBrands] = useState([]);
 	const [models, setModels] = useState([]);
@@ -33,7 +34,7 @@ const ChatBot = () => {
 	}, []);
 
 	const handleSend = async () => {
-		if (!input) return;
+		if (!input || isTyping) return;
 
 		const userMsg = { sender: "user", text: input };
 		setInput("");
@@ -61,8 +62,14 @@ const ChatBot = () => {
 	};
 
 	useEffect(() => {
-		chatRef.current?.scrollIntoView({ behaviour: "smooth" });
+		chatRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages]);
+
+	useEffect(() => {
+		if (!isTyping) {
+			inputRef.current?.focus();
+		}
+	}, [isTyping]);
 
 	return (
 		<div>
@@ -78,67 +85,77 @@ const ChatBot = () => {
 				{isTyping && <div className="botMessage">typing...</div>}
 				<div ref={chatRef}></div>
 			</div>
-			{currentSlot?.type === "dropdown" && (
-				<select
-					name="dropdowns"
-					onChange={(e) => setInput(e.target.value)}
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-							handleSend();
-						}
-					}}
-				>
-					<option>Select option</option>
+			<div className="inputContainer">
+				{currentSlot?.type === "dropdown" && (
+					<select
+						name="dropdowns"
+						className="chatInput"
+						ref={inputRef}
+						disabled={isTyping}
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								handleSend();
+							}
+						}}
+					>
+						<option value="">Select option</option>
 
-					{currentSlot.slot === "brand" &&
-						brands.map((brand) => (
-							<option key={brand} value={brand}>
-								{brand}
-							</option>
-						))}
+						{currentSlot.slot === "brand" &&
+							brands.map((brand) => (
+								<option key={brand} value={brand}>
+									{brand}
+								</option>
+							))}
 
-					{currentSlot.slot === "model" &&
-						models.map((model) => (
-							<option key={model} value={model}>
-								{model}
-							</option>
-						))}
+						{currentSlot.slot === "model" &&
+							models.map((model) => (
+								<option key={model} value={model}>
+									{model}
+								</option>
+							))}
 
-					{currentSlot.slot === "fuel_type" &&
-						fuel_types.map((fuel_type) => (
-							<option key={fuel_type} value={fuel_type}>
-								{fuel_type}
-							</option>
-						))}
+						{currentSlot.slot === "fuel_type" &&
+							fuel_types.map((fuel_type) => (
+								<option key={fuel_type} value={fuel_type}>
+									{fuel_type}
+								</option>
+							))}
 
-					{currentSlot.slot === "transmission_type" &&
-						transmission_types.map((transmission_type) => (
-							<option key={transmission_type} value={transmission_type}>
-								{transmission_type}
-							</option>
-						))}
+						{currentSlot.slot === "transmission_type" &&
+							transmission_types.map((transmission_type) => (
+								<option key={transmission_type} value={transmission_type}>
+									{transmission_type}
+								</option>
+							))}
 
-					{currentSlot.slot === "year_of_manufacture" &&
-						yearOptions.map((year_of_manufacture) => (
-							<option key={year_of_manufacture} value={year_of_manufacture}>
-								{year_of_manufacture}
-							</option>
-						))}
-				</select>
-			)}
-			{(currentSlot?.type === "number" || !currentSlot) && (
-				<input
-					name="staticInput"
-					value={input}
-					onChange={(e) => setInput(e.target.value)}
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-							handleSend();
-						}
-					}}
-				></input>
-			)}
-			<button onClick={handleSend}>Send</button>
+						{currentSlot.slot === "year_of_manufacture" &&
+							yearOptions.map((year_of_manufacture) => (
+								<option key={year_of_manufacture} value={year_of_manufacture}>
+									{year_of_manufacture}
+								</option>
+							))}
+					</select>
+				)}
+				{(currentSlot?.type === "number" || !currentSlot) && (
+					<input
+						className="chatInput"
+						name="staticInput"
+						value={input}
+						ref={inputRef}
+						disabled={isTyping}
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								handleSend();
+							}
+						}}
+					></input>
+				)}
+				<button className="sendButton" disabled={isTyping} onClick={handleSend}>
+					{isTyping ? "..." : "Send"}
+				</button>
+			</div>
 		</div>
 	);
 };
