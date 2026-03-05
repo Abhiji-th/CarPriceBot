@@ -4,23 +4,13 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"start": "node server",
-
 		"backend": "nodemon --env-file=.env server",
-
 		"frontend": "cd ../frontend && npm run dev",
-
-		"mlservice": "cd .. && venv\\Scripts\\activate && python ml-service/src/app.py",
-
-		"rasa": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa run --enable-api --debug --cors *",
-
-		"rasa-train": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && rasa train",
-
-		"actions": "cd .. && rasa_env\\Scripts\\activate && cd chatbot && watchmedo auto-restart --patterns=\"*.py\" --recursive -- rasa run actions",
-
-		"dev": "concurrently \"npm run rasa\" \"npm run actions\" \"npm run backend\" \"npm run mlservice\" \"npm run frontend\"",
-
-		"seed": "node seeds/carData.seed.js"
+		"ml": "../venv/bin/python ../ml-service/src/app.py",
+		"rasa": "cd ../chatbot && ../rasa_env/bin/python -m rasa run --enable-api --debug --cors \"*\"",
+		"actions": "cd ../chatbot && ../rasa_env/bin/python -m rasa run actions --debug",
+		"rasa-train": "cd ../chatbot && ../rasa_env/bin/python -m rasa train",
+		"dev": "concurrently --kill-others \"npm run rasa\" \"npm run actions\" \"npm run backend\" \"npm run ml\" \"npm run frontend\""
 	},
 	"keywords": [],
 	"author": "",
@@ -33,6 +23,7 @@
 	},
 	"dependencies": {
 		"cors": "^2.8.6",
+		"cross-env": "^10.1.0",
 		"express": "^5.2.1",
 		"flask-cors": "^0.0.1",
 		"mongoose": "^9.2.2",
