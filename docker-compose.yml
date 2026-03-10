@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build: /frontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build: /backend
+    ports:
+      - "8000:8000"
+    environment:
+      RASA_URL: http://rasa:5005
+      ML_URL: http://ml:5000
+
+  mlservice:
+    build: /ml-service
+    ports:
+      - "5000:5000"
+
+  rasaservice:
+    build: /chatbot
+    ports:
+      - "5005:5005"
+    depends_on:
+      - rasaactions
+
+  rasaactions:
+    build: /chatbot/actions
+    ports:
+      - "5055:5055"

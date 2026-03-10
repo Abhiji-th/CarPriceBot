@@ -501,7 +501,7 @@ class ActionPredictCarPrice(Action):
         seats = tracker.get_slot('seats')
 
         # Construct the API URL
-        api_url = f"http://127.0.0.1:8000/api/predict_price"
+        api_url = f"http://backend:8000/api/predict_price"
 
         payload = {
             "brand": brand,
@@ -582,7 +582,7 @@ class ActionMaxContribution(Action):
 
         # Construct the API URL with the car details
         # Construct the API URL
-        api_url = f"http://127.0.0.1:8000/api/max_contribution"
+        api_url = f"http://backend:8000/api/max_contribution"
 
         payload = {
             "brand": brand,
