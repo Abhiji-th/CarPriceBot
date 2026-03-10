@@ -11,6 +11,7 @@ venv/
 .env/
 .env*/
 rasa_env/
+rasaenv/
 .venv/
 
 # ===============================
