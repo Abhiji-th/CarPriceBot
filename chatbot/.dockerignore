@@ -1,0 +1,8 @@
+rasaenv
+__pycache__
+*.pyc
+.git
+node_modules
+*.log
+.DS_Store
+models/
