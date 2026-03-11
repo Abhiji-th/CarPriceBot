@@ -1,11 +1,11 @@
 services:
   frontend:
-    build: /frontend
+    build: frontend
     ports:
       - "3000:3000"
 
   backend:
-    build: /backend
+    build: backend
     ports:
       - "8000:8000"
     environment:
@@ -13,18 +13,18 @@ services:
       ML_URL: http://ml:5000
 
   mlservice:
-    build: /ml-service
+    build: ml-service
     ports:
       - "5000:5000"
 
   rasaservice:
-    build: /chatbot
+    build: chatbot
     ports:
       - "5005:5005"
     depends_on:
       - rasaactions
 
   rasaactions:
-    build: /chatbot/actions
+    build: chatbot/actions
     ports:
       - "5055:5055"
